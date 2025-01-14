@@ -1,6 +1,8 @@
 import React from 'react';
 import Header from './component/Header';
 import HomePage from './component/HomePageBanner';
+import WhyChooseUs from './component/WhyChooseUs';
+import ReviewSection from './component/ReviewSection';
 // import Footer from './components/Footer';
 // import PopularDestinations from './components/PopularDestinations';
 // import TripPlanner from './components/TripPlanner';
@@ -10,13 +12,15 @@ import HomePage from './component/HomePageBanner';
 function App() {
   return (
     <div>
-      <Header />
+      <Header className="container mx-auto" ></Header><br></br>
       <main className="container mx-auto">
 {/* 
         <PopularDestinations />
         <TripPlanner />
         <TicketBooking /> */}
-        <HomePage></HomePage>
+        <HomePage/>
+        <WhyChooseUs/>
+        <ReviewSection/>
       </main>
       {/* <Footer /> */}
     </div>
