@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
+
 const destinations = [
     {
       name: 'Ram Mandir Ayodhya, India',
