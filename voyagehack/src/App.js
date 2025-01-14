@@ -4,7 +4,7 @@ import HomePage from './component/HomePageBanner';
 import WhyChooseUs from './component/WhyChooseUs';
 import ReviewSection from './component/ReviewSection';
 // import Footer from './components/Footer';
-// import PopularDestinations from './components/PopularDestinations';
+import PopularDestinations from './component/PopularDestination';
 // import TripPlanner from './components/TripPlanner';
 // import TicketBooking from './components/TicketBooking';
 // import './styles.css';
@@ -14,13 +14,14 @@ function App() {
     <div>
       <Header className="container mx-auto" ></Header><br></br>
       <main className="container mx-auto">
-{/* 
-        <PopularDestinations />
-        <TripPlanner />
+
+        {/* <TripPlanner />
         <TicketBooking /> */}
         <HomePage/>
         <WhyChooseUs/>
         <ReviewSection/>
+        <PopularDestinations />
+
       </main>
       {/* <Footer /> */}
     </div>
