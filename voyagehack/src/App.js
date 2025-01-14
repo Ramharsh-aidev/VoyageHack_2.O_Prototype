@@ -1,30 +1,29 @@
 import React from 'react';
-import Header from './component/Header';
-import HomePage from './component/HomePageBanner';
-import WhyChooseUs from './component/WhyChooseUs';
-import ReviewSection from './component/ReviewSection';
-// import Footer from './components/Footer';
-import PopularDestinations from './component/PopularDestination';
-// import TripPlanner from './components/TripPlanner';
-// import TicketBooking from './components/TicketBooking';
-// import './styles.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Routes/Home';
 
 function App() {
   return (
-    <div>
-      <Header className="container mx-auto" ></Header><br></br>
-      <main className="container mx-auto">
-
-        {/* <TripPlanner />
-        <TicketBooking /> */}
-        <HomePage/>
-        <WhyChooseUs/>
-        <ReviewSection/>
-        <PopularDestinations />
-
-      </main>
-      {/* <Footer /> */}
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          
+          {/* <Route path="/blog" element={<BlogPage />} /> */}
+          {/* <Route path="/privacy-policy" element={<PrivacyPolicyPage />} /> */}
+          {/* <Route path="/terms-conditions" element={<TermsConditionsPage />} /> */}
+          {/* <Route path="/about" element={<AboutPage />} /> */}
+          {/* <Route path="/ai-trip-planner" element={<AiTripPlannerPage />} /> */}
+          {/* <Route path="/ai-destination-suggestions" element={<AiDestinationSuggestionsPage />} /> */}
+          {/* <Route path="/booking-integration" element={<BookingIntegrationPage />} /> */}
+          {/* <Route path="/budget-tracker" element={<BudgetTrackerPage />} /> */}
+          {/* <Route path="/local-insights-features" element={<LocalInsightsFeaturesPage />} /> */}
+          {/* <Route path="/marketplace" element={<MarketplacePage />} /> */}
+          {/* <Route path="/company" element={<CompanyPage />} /> */}
+          {/* <Route path="/login" element={<LoginPage />} /> */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
