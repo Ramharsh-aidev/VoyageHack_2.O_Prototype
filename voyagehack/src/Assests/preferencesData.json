@@ -1,0 +1,45 @@
+{
+    "moods": {
+      "adventure": ["adventure", "hiking", "trekking", "wildlife", "safari", "extreme sports"],
+      "romantic": ["romantic", "couple", "honeymoon", "secluded", "intimate", "beachfront"],
+      "relaxation": ["relax", "chill", "peaceful", "serene", "spa", "meditation"],
+      "cultural": ["culture", "historical", "heritage", "temples", "museums"]
+    },
+    "activities": {
+      "adventure": ["trekking", "paragliding", "scuba", "rafting", "mountain climbing", "safari"],
+      "beach": ["swimming", "surfing", "snorkeling", "beach volleyball", "sunbathing", "yoga on the beach"],
+      "nature": ["hiking", "camping", "sightseeing", "eco-tourism", "wildlife photography"],
+      "historical": ["museums", "ruins", "temples", "palaces", "archaeological sites"],
+      "spiritual": ["pilgrimages", "temples", "churches", "mosques", "sacred sites", "rituals"]
+    },
+    "destinations": {
+      "coastal": ["beach", "sea", "coastal", "island", "coral reefs", "beach resorts"],
+      "hillStation": ["hill station", "mountain", "nature", "forest", "alpine lakes"],
+      "historical": ["ruins", "palaces", "museums", "temples", "forts", "archaeological sites"],
+      "cultural": ["historical cities", "cultural heritage sites", "festivals", "temples", "monasteries"],
+      "urban": ["cities", "nightlife", "shopping", "restaurants", "architecture", "museums"]
+    },
+    "seasons": {
+      "summer": ["hot", "beach", "sea", "water sports", "tropical regions", "desert"],
+      "winter": ["cold", "snow", "skiing", "snowfall", "winter festivals", "ski resorts"],
+      "monsoon": ["rain", "waterfalls", "lush greenery", "rainforest", "tropical climate"]
+    },
+    "ages": {
+      "young": ["youth", "adventure", "active", "party", "explore", "beach parties"],
+      "middleAged": ["relax", "culture", "history", "wine", "comfort", "nature walks"],
+      "elderly": ["relax", "peaceful", "scenic", "gentle", "spa", "leisurely walks"]
+    },
+    "religion": {
+      "hindu": ["temples", "pilgrimages", "ashrams", "sacred rivers", "Himalayas", "Ayodhya"],
+      "muslim": ["mosques", "holy cities", "pilgrimages", "Mecca", "Islamic heritage sites"],
+      "christian": ["churches", "pilgrimages", "holy sites", "Vatican City", "Bethlehem", "Rome", "Santiago de Compostela"],
+      "buddhist": ["monasteries", "Buddha statues", "temples", "Lumbini", "Bodh Gaya", "Thailand", "Tibet"],
+      "jewish": ["synagogues", "Jerusalem", "Western Wall", "Dead Sea", "Jewish heritage sites"]
+    },
+    "bestTiming": {
+      "summer": ["March to June"],
+      "winter": ["October to February"],
+      "monsoon": ["June to September"]
+    }
+  }
+  

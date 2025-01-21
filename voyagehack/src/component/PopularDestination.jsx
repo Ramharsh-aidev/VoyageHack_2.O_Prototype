@@ -46,7 +46,7 @@ const PopularDestinations = () => {
   const destination = destinations[currentIndex];
 
   return (
-    <div className="px-6 py-32 text-center bg-white-50">
+    <div className="px-6 py-12 text-center bg-white-50">
       <motion.h2
             className="text-4xl font-bold text-indigo-500 mb-8 px-4 py-2 transition-all duration-300 relative inline-block"
             initial={{ opacity: 0 }}
