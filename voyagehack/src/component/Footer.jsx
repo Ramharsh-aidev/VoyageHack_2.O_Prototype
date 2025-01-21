@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';  // Using react-icons for social media icons
+import Logo from '../images/Website_Logo.jpeg';
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
         {/* Column 1 - Logo & About */}
         <div className="flex flex-col items-start">
           <img
-            src="https://your-logo-url.com/logo.png" // Replace with your logo URL
+            src={Logo} // Replace with your logo URL
             alt="Travel Lovers"
             className="h-12 mb-6"
           />

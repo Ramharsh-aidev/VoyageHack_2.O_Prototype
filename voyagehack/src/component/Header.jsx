@@ -9,13 +9,13 @@ const products = [
   { 
     name: 'AI-Powered Trip Planner', 
     description: 'Plan your entire trip with AI suggestions, itineraries, and personalized recommendations.', 
-    href: '#', 
+    href: 'ai-trip-planner', 
     icon: ChartPieIcon 
   },
   { 
     name: 'AI Destination Suggestions', 
     description: 'Get AI-driven destination recommendations based on your preferences and budget.', 
-    href: '#',  
+    href: '/ai-Destination-suggester',  
     icon: CursorArrowRaysIcon 
   },
   { 

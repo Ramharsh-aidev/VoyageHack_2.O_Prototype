@@ -6,6 +6,7 @@ import WhyChooseUs from '../component/WhyChooseUs';
 import PopularDestinations from '../component/PopularDestination';
 import ReviewSection from '../component/ReviewSection';
 import Footer from '../component/Footer';
+import OtherServices from '../component/OtherServices';
 
 const Home = () => {
   return (
@@ -16,8 +17,9 @@ const Home = () => {
       {/* Main content of the home page */}
       <main className="container mx-auto">
         <HomePageBanner />
-        <WhyChooseUs />
+        <OtherServices></OtherServices>
         <PopularDestinations />
+        <WhyChooseUs />
         <ReviewSection />
       </main>
       
