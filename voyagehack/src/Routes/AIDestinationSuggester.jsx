@@ -4,6 +4,9 @@ import ReactMarkdown from "react-markdown";
 import styles from "../cssFiles/AITripPlanner.module.css";
 import preferencesData from "../Assests/preferencesData.json";
 
+// Directly defining the API key here
+const apiKey = process.env.GEMINI_API_KEY; // Replace this with your actual Gemini API key
+
 function AITripPlanner() {
   const [chatHistory, setChatHistory] = useState([]);
   const [question, setQuestion] = useState("");
@@ -33,54 +36,54 @@ function AITripPlanner() {
   // Function to detect preferences from user input based on the available data
   const detectPreferences = (input) => {
     let detectedPreferences = {};
-  
+
     const lowerCaseInput = input.toLowerCase();
-  
+
     // Detect mood
     Object.keys(preferencesData.moods).forEach((mood) => {
       if (preferencesData.moods[mood].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.mood = mood;
       }
     });
-  
+
     // Detect activity
     Object.keys(preferencesData.activities).forEach((activity) => {
       if (preferencesData.activities[activity].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.activity = activity;
       }
     });
-  
+
     // Detect destination
     Object.keys(preferencesData.destinations).forEach((destination) => {
       if (preferencesData.destinations[destination].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.destination = destination;
       }
     });
-  
+
     // Detect season
     Object.keys(preferencesData.seasons).forEach((season) => {
       if (preferencesData.seasons[season].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.season = season;
       }
     });
-  
+
     // Detect age group
     Object.keys(preferencesData.ages).forEach((ageGroup) => {
       if (preferencesData.ages[ageGroup].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.ageGroup = ageGroup;
       }
     });
-  
+
     // Detect religion
     Object.keys(preferencesData.religion).forEach((religion) => {
       if (lowerCaseInput.includes(religion)) {
         detectedPreferences.religion = religion;
       }
     });
-  
+
     return detectedPreferences;
   };
-  
+
   // Function to generate AI's response based on the user input
   async function generateAnswer(e) {
     e.preventDefault();
@@ -128,16 +131,16 @@ function AITripPlanner() {
       const context = chatHistory.map((message) => ({ text: message.content }));
       context.push({ text: currentQuestion });
 
-      // API request
+      // API request to Gemini 2.0 Flash Thinking Experimental Model
       const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GOOGLE_GEMINI_API}`,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-thinking-exp-01-21:generateContent?key=${apiKey}`,
         method: "post",
         data: {
           contents: [{ parts: context.map((item) => ({ text: item.text })) }],
         },
       });
 
-      const aiResponse = response.data.candidates[0]?.content?.parts[0]?.text;
+      const aiResponse = response.data.candidates[0].content.parts[0].text;
 
       // Combine AI response with additional info
       const fullResponse = aiResponse + "\n\n" + additionalInfo;
