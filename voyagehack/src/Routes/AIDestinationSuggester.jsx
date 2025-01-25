@@ -5,7 +5,7 @@ import styles from "../cssFiles/AITripPlanner.module.css";
 import preferencesData from "../Assests/preferencesData.json";
 
 // Directly defining the API key here
-const apiKey = process.env.GEMINI_API_KEY; // Replace this with your actual Gemini API key
+const apiKey = process.env.G_API; // Replace this with your actual Gemini API key
 
 function AITripPlanner() {
   const [chatHistory, setChatHistory] = useState([]);

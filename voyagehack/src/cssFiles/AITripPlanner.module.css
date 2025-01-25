@@ -28,64 +28,105 @@
   overflow-y: auto;
   padding: 2rem;
   background-color: #ffffff;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Enhance shadow for depth */
+  border-radius: 15px; /* Softer edges */
   margin: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  max-height: 75%; /* Limit chat container height for better layout */
+  transition: all 0.3s ease-in-out;
+}
+
+.chatContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chatContainer::-webkit-scrollbar-thumb {
+  background-color: #2585e6;
+  border-radius: 10px;
 }
 
 .welcomeMessage {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: #2585e6;
+  font-weight: 600;
 }
 
 .message {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.5s ease-out; /* Smooth transition when new message appears */
 }
 
 .messageContent {
-  max-width: 75%;
-  padding: 1rem;
-  border-radius: 12px;
+  max-width: 80%; /* Increase message bubble size */
+  padding: 1.25rem; /* Slightly bigger padding */
+  border-radius: 20px; /* Rounded corners for bubbles */
   word-wrap: break-word;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  font-size: 1.1rem; /* Slightly bigger font size */
 }
 
 .question .messageContent {
-  background-color: #2585e6;
+  background: linear-gradient(145deg, #2585e6, #1d0339); /* Gradient for questions */
   color: white;
   align-self: flex-end;
   border-top-left-radius: 0;
+  transform: scale(1.02); /* Slight scaling effect for engagement */
 }
 
 .answer .messageContent {
-  background-color: #f1f1f1;
+  background: linear-gradient(145deg, #f1f1f1, #ffffff); /* Gradient for answers */
   color: #333;
   align-self: flex-start;
   border-top-right-radius: 0;
 }
 
+
+
 .thinkingMessage {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #2585e6;
+  font-weight: 500;
+  animation: fadeIn 0.8s ease-out, bounce 1s infinite;
+  margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .inputForm {
   display: flex;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: #ffffff;
-  box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .questionInput {
   flex-grow: 1;
-  padding: 0.8rem;
+  padding: 1rem;
   border: 2px solid #a5c5e5;
   border-radius: 12px;
   font-size: 1rem;
@@ -99,19 +140,24 @@
 }
 
 .sendButton {
-  padding: 0.5rem 1.5rem;
+  padding: 0.6rem 1.6rem;
   background-color: #2585e6;
   color: white;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: large;
-  border-radius: 8px;
+  border-radius: 10px; /* Softer button edges */
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .sendButton:hover {
   background-color: #48b6da;
+  transform: scale(1.05); /* Slight button scaling for hover effect */
+}
+
+.sendButton:active {
+  background-color: #217bb6;
 }
 
 .disabled {
