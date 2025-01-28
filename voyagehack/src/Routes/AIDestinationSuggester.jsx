@@ -3,16 +3,19 @@ import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import styles from "../cssFiles/AITripPlanner.module.css";
 import preferencesData from "../Assests/preferencesData.json";
+import MapComponent from "../component/MapComponent";
+import PlaceExtractor from "../component/PlaceExtractor";
 
-// Directly defining the API key here
-const apiKey = process.env.G_API; // Replace this with your actual Gemini API key
+const apiKey = process.env.G_API; // Replace with your actual Gemini API key
 
 function AITripPlanner() {
   const [chatHistory, setChatHistory] = useState([]);
   const [question, setQuestion] = useState("");
   const [generatingAnswer, setGeneratingAnswer] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [places, setPlaces] = useState([]);
   const chatContainerRef = useRef(null);
+  const [isMapVisible, setIsMapVisible] = useState(false); // State for map visibility
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -33,48 +36,35 @@ function AITripPlanner() {
     }
   };
 
-  // Function to detect preferences from user input based on the available data
   const detectPreferences = (input) => {
     let detectedPreferences = {};
-
     const lowerCaseInput = input.toLowerCase();
 
-    // Detect mood
     Object.keys(preferencesData.moods).forEach((mood) => {
       if (preferencesData.moods[mood].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.mood = mood;
       }
     });
-
-    // Detect activity
     Object.keys(preferencesData.activities).forEach((activity) => {
       if (preferencesData.activities[activity].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.activity = activity;
       }
     });
-
-    // Detect destination
     Object.keys(preferencesData.destinations).forEach((destination) => {
       if (preferencesData.destinations[destination].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.destination = destination;
       }
     });
-
-    // Detect season
     Object.keys(preferencesData.seasons).forEach((season) => {
       if (preferencesData.seasons[season].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.season = season;
       }
     });
-
-    // Detect age group
     Object.keys(preferencesData.ages).forEach((ageGroup) => {
       if (preferencesData.ages[ageGroup].some((word) => lowerCaseInput.includes(word))) {
         detectedPreferences.ageGroup = ageGroup;
       }
     });
-
-    // Detect religion
     Object.keys(preferencesData.religion).forEach((religion) => {
       if (lowerCaseInput.includes(religion)) {
         detectedPreferences.religion = religion;
@@ -84,54 +74,42 @@ function AITripPlanner() {
     return detectedPreferences;
   };
 
-  // Function to generate AI's response based on the user input
   async function generateAnswer(e) {
     e.preventDefault();
     if (!question.trim()) return;
 
     setGeneratingAnswer(true);
     const currentQuestion = question;
-    setQuestion(""); // Clear the input field immediately after submitting
+    setQuestion("");
 
-    // Add the current question to chat history only once
     setChatHistory((prev) => [
       ...prev,
       { type: "question", content: currentQuestion },
     ]);
 
     try {
-      // Detect user preferences from the question
       const detectedPreferences = detectPreferences(currentQuestion);
-
-      // Generate additional info based on detected preferences
       let additionalInfo = "";
 
-      // Provide suggestions based on preferences
       if (detectedPreferences.mood) {
         additionalInfo += `For a ${detectedPreferences.mood} mood, consider activities like: ${preferencesData.moods[detectedPreferences.mood].join(", ")}.\n`;
       }
-
       if (detectedPreferences.activity) {
         additionalInfo += `For activities like ${detectedPreferences.activity}, you might enjoy: ${preferencesData.activities[detectedPreferences.activity].join(", ")}.\n`;
       }
-
       if (detectedPreferences.destination) {
         additionalInfo += `For destinations, you could explore: ${preferencesData.destinations[detectedPreferences.destination].join(", ")}.\n`;
       }
-
       if (detectedPreferences.season) {
         additionalInfo += `The best season for such trips is: ${preferencesData.bestTiming[detectedPreferences.season].join(", ")}.\n`;
       }
-
       if (detectedPreferences.ageGroup) {
         additionalInfo += `As you are in the ${detectedPreferences.ageGroup} age group, you might prefer: ${preferencesData.ages[detectedPreferences.ageGroup].join(", ")}.\n`;
       }
 
-      // Maintain conversation context
       const context = chatHistory.map((message) => ({ text: message.content }));
       context.push({ text: currentQuestion });
 
-      // API request to Gemini 2.0 Flash Thinking Experimental Model
       const response = await axios({
         url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-thinking-exp-01-21:generateContent?key=${apiKey}`,
         method: "post",
@@ -141,20 +119,25 @@ function AITripPlanner() {
       });
 
       const aiResponse = response.data.candidates[0].content.parts[0].text;
-
-      // Combine AI response with additional info
       const fullResponse = aiResponse + "\n\n" + additionalInfo;
 
       setChatHistory((prev) => [...prev, { type: "answer", content: fullResponse }]);
-      setRetryCount(0); // Reset retry count on success
+      setRetryCount(0);
     } catch (error) {
       console.error("Error:", error);
-      // If error occurs, try retrying the request
       retryAPI(e);
     }
 
     setGeneratingAnswer(false);
   }
+
+  const handlePlacesExtracted = (extractedPlaces) => {
+    setPlaces(extractedPlaces);
+  };
+
+  const toggleMapVisibility = () => {
+    setIsMapVisible(!isMapVisible);
+  };
 
   return (
     <div className={styles.aiTripPlannerContainer}>
@@ -164,31 +147,51 @@ function AITripPlanner() {
         </a>
       </div>
 
-      <div ref={chatContainerRef} className={styles.chatContainer}>
-        {chatHistory.length === 0 ? (
-          <div className={styles.welcomeMessage}>
-            <h2>Welcome to the AI Suggester! 🌍</h2>
-            <p>Let me help you plan your next destination based on your preferences.</p>
-          </div>
-        ) : (
-          chatHistory.map((chat, index) => (
-            <div
-              key={index}
-              className={`${styles.message} ${chat.type === "question" ? styles.question : styles.answer}`}
-            >
-              <div className={styles.messageContent}>
-                <ReactMarkdown>{chat.content}</ReactMarkdown>
-              </div>
+      <div className={styles.mainContent}>
+        <div ref={chatContainerRef} className={`${styles.chatContainer} ${isMapVisible ? styles.chatContainerMapVisible : styles.chatContainerMapHidden}`}>
+          {chatHistory.length === 0 ? (
+            <div className={styles.welcomeMessage}>
+              <h2>Welcome to the AI Suggester! 🌍</h2>
+              <p>Let me help you plan your next destination based on your preferences.</p>
             </div>
-          ))
-        )}
+          ) : (
+            chatHistory.map((chat, index) => (
+              <div
+                key={index}
+                className={`${styles.message} ${chat.type === "question" ? styles.question : styles.answer}`}
+              >
+                <div className={styles.messageContent}>
+                  <ReactMarkdown>{chat.content}</ReactMarkdown>
+                </div>
+              </div>
+            ))
+          )}
 
-        {generatingAnswer && (
-          <div className={styles.thinkingMessage}>
-            <span>Thinking...</span>
+          {generatingAnswer && (
+            <div className={styles.thinkingMessage}>
+              <span>Thinking...</span>
+            </div>
+          )}
+        </div>
+
+        <div className={`${styles.mapColumn} ${isMapVisible ? styles.mapColumnVisible : styles.mapColumnHidden}`}>
+          <button className={styles.mapToggleButton} onClick={toggleMapVisibility}>
+            {isMapVisible ? "Hide Map" : "Show Map"}
+          </button>
+          <div className={styles.mapContainerWrapper}>
+            {isMapVisible && places.length > 0 && <MapComponent places={places} />}
           </div>
-        )}
+        </div>
       </div>
+
+
+      {chatHistory.length > 0 && (
+        <PlaceExtractor
+          aiResponseText={chatHistory[chatHistory.length - 1].content}
+          onPlacesExtracted={handlePlacesExtracted}
+        />
+      )}
+
 
       <form onSubmit={generateAnswer} className={styles.inputForm}>
         <textarea
