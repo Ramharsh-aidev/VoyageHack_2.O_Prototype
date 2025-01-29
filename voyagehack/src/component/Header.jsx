@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel, Popover, PopoverButton, PopoverGroup, PopoverPanel } from '@headlessui/react';
-import { ArrowPathIcon, ChartPieIcon, CursorArrowRaysIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, ChartPieIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'; // Import Bars3Icon and XMarkIcon here
 import { CreditCardIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import Logo from '../images/Website_Logo.jpeg';
@@ -8,15 +8,9 @@ import Logo from '../images/Website_Logo.jpeg';
 const products = [
   { 
     name: 'AI-Powered Trip Planner', 
-    description: 'Plan your entire trip with AI suggestions, itineraries, and personalized recommendations.', 
+    description: 'Plan trip with AI-driven suggestions, personalized itineraries & recommendations on your preferences', 
     href: 'ai-trip-planner', 
     icon: ChartPieIcon 
-  },
-  { 
-    name: 'AI Destination Suggestions', 
-    description: 'Get AI-driven destination recommendations based on your preferences and budget.', 
-    href: '/ai-Destination-suggester',  
-    icon: CursorArrowRaysIcon 
   },
   { 
     name: 'Booking Integration', 
@@ -27,7 +21,7 @@ const products = [
   { 
     name: 'Budget Tracker', 
     description: 'Keep track of your travel expenses and ensure your trip stays within budget.', 
-    href: '#', 
+    href: 'budget-tracker', 
     icon: CreditCardIcon 
   },
   { 

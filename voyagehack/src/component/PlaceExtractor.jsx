@@ -11,7 +11,7 @@ const PlaceExtractor = ({ aiResponseText, onPlacesExtracted }) => {
   }, [aiResponseText]);
 
 
-  const apiKey=process.env.G_API;
+  const apiKey='';
 
   const extractPlaces = async (responseText) => {
     setLoading(true);

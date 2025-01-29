@@ -6,7 +6,7 @@ import preferencesData from "../Assests/preferencesData.json";
 import MapComponent from "../component/MapComponent";
 import PlaceExtractor from "../component/PlaceExtractor";
 
-const apiKey = process.env.G_API; // Replace with your actual Gemini API key
+const apiKey = ""; // Replace with your actual Gemini API key
 
 function AITripPlanner() {
   const [chatHistory, setChatHistory] = useState([]);

@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Routes/Home';
-import AISuggestor from './Routes/AIDestinationSuggester';
+import AiTripPlanner from './Routes/AITripPlanner';
+import BudgetTrackerPage from './Routes/BudgetTracker';
 
 function App() {
   return (
@@ -14,10 +15,9 @@ function App() {
           {/* <Route path="/privacy-policy" element={<PrivacyPolicyPage />} /> */}
           {/* <Route path="/terms-conditions" element={<TermsConditionsPage />} /> */}
           {/* <Route path="/about" element={<AboutPage />} /> */}
-          <Route path="/ai-Destination-suggester" element={<AISuggestor />} />
-          {/* <Route path="/ai-trip-planner" element={<AiTripPlanner />} /> */}
+          <Route path="/ai-trip-planner" element={<AiTripPlanner />} />
           {/* <Route path="/booking-integration" element={<BookingIntegrationPage />} /> */}
-          {/* <Route path="/budget-tracker" element={<BudgetTrackerPage />} /> */}
+          <Route path="/budget-tracker" element={<BudgetTrackerPage />} />
           {/* <Route path="/local-insights-features" element={<LocalInsightsFeaturesPage />} /> */}
           {/* <Route path="/marketplace" element={<MarketplacePage />} /> */}
           {/* <Route path="/company" element={<CompanyPage />} /> */}
