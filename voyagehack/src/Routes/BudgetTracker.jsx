@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
@@ -24,8 +24,9 @@ const BudgetTracker = () => {
     const [showOverBudgetModal, setShowOverBudgetModal] = useState(false);
     const [overBudgetAmount, setOverBudgetAmount] = useState(0);
 
+
     // Fetch exchange rate for selected currency
-    const fetchExchangeRate = async (currencyCode) => {
+    const fetchExchangeRate = useCallback(async (currencyCode) => {
         try {
             const response = await axios.get(`https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/USD`);
             const rate = response.data.conversion_rates[currencyCode];
@@ -34,7 +35,7 @@ const BudgetTracker = () => {
         } catch (error) {
             console.error('Error fetching exchange rate:', error);
         }
-    };
+    },[totalBudget]);
 
 
     const handleCurrencyChange = (event) => {
@@ -118,9 +119,9 @@ const BudgetTracker = () => {
             return total + Object.values(category).reduce((catTotal, val) => catTotal + val, 0);
         }, 0);
     };
-    const getTotalExpenses = () => {
+    const getTotalExpenses = useCallback(() => {
         return calculateTotalExpenses(expenses);
-    };
+    },[expenses]);
     const remainingBudget = convertedTotalBudget ? convertedTotalBudget - getTotalExpenses() : 0;
 
 
@@ -148,14 +149,17 @@ const BudgetTracker = () => {
         ],
     };
     const isOverBudget = getTotalExpenses() > convertedTotalBudget;
-    useEffect(() => {
-        const percentageSpent = (getTotalExpenses() / convertedTotalBudget) * 100;
-        if (percentageSpent > 90 && !isOverBudget) {
-            setShowExceedAlert(true);
-            setTimeout(() => setShowExceedAlert(false), 5000);
-        }
 
-    }, [expenses, convertedTotalBudget]);
+    useEffect(() => {
+            const percentageSpent = (getTotalExpenses() / convertedTotalBudget) * 100;
+            if (percentageSpent > 90 && !isOverBudget) {
+                setShowExceedAlert(true);
+                setTimeout(() => setShowExceedAlert(false), 5000);
+            }
+
+        }, [expenses, convertedTotalBudget, getTotalExpenses, isOverBudget]);
+
+
 
     // Fetch available currencies when component mounts
     useEffect(() => {
@@ -170,7 +174,7 @@ const BudgetTracker = () => {
 
         fetchCurrencies();
         fetchExchangeRate(currency);
-    }, [currency]);
+    }, [currency, fetchExchangeRate]);
 
     return (
         <div className="min-h-screen bg-gray-100 py-8">
