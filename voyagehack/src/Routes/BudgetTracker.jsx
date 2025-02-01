@@ -23,8 +23,9 @@ const BudgetTracker = () => {
     const [showExceedAlert, setShowExceedAlert] = useState(false);
     const [showOverBudgetModal, setShowOverBudgetModal] = useState(false);
     const [overBudgetAmount, setOverBudgetAmount] = useState(0);
+    const [show80PercentAlert, setShow80PercentAlert] = useState(false);
 
-    
+
     const exchangeRate_API_KEY=process.env.REACT_APP_EXCHANGE_RATE_API_KEY;
 
     // Fetch exchange rate for selected currency
@@ -37,7 +38,7 @@ const BudgetTracker = () => {
         } catch (error) {
             console.error('Error fetching exchange rate:', error);
         }
-    },[totalBudget]);
+    },[totalBudget, exchangeRate_API_KEY]);
 
 
     const handleCurrencyChange = (event) => {
@@ -65,7 +66,8 @@ const BudgetTracker = () => {
         const totalExpenses = calculateTotalExpenses(newExpenses);
         if (totalExpenses > convertedTotalBudget) {
             setShowOverBudgetModal(true);
-            setOverBudgetAmount(totalExpenses - convertedTotalBudget);
+            setShowExceedAlert(false);
+            setShow80PercentAlert(false);
 
         } else {
             setShowOverBudgetModal(false);
@@ -89,7 +91,8 @@ const BudgetTracker = () => {
             const totalExpenses = calculateTotalExpenses(newExpenses);
             if (totalExpenses > convertedTotalBudget) {
                 setShowOverBudgetModal(true);
-                setOverBudgetAmount(totalExpenses - convertedTotalBudget);
+                setShowExceedAlert(false);
+                setShow80PercentAlert(false);
             } else {
                 setShowOverBudgetModal(false);
                 setExpenses(newExpenses);
@@ -141,23 +144,59 @@ const BudgetTracker = () => {
         ],
     };
 
-    const pieChartData = {
-        labels: Object.keys(expenses),
-        datasets: [
-            {
-                data: Object.values(expenses).map((category) => Object.values(category).reduce((sum, val) => sum + val, 0)),
-                backgroundColor: ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#ffb3e6', '#c2c2f0'],
-            },
-        ],
-    };
+    const generatePieChartData = useCallback(() => {
+        const labels = [];
+        const data = [];
+        const backgroundColors = [];
+        const categoryColors = ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99', '#ffb3e6', '#c2c2f0', '#a1c9f4', '#ffdb58', '#8de5a1', '#cab2d6']; // Added more colors for more categories/subcategories
+        let colorIndex = 0;
+
+        Object.entries(expenses).forEach(([categoryName, subcategories]) => {
+            Object.entries(subcategories).forEach(([subName, amount]) => {
+                if (amount > 0) { // Only add if there's an amount
+                    labels.push(`${categoryName} - ${subName}`);
+                    data.push(amount);
+                    backgroundColors.push(categoryColors[colorIndex % categoryColors.length]); // Cycle through colors
+                }
+            });
+            colorIndex++; // Move to the next color for the next category
+        });
+
+        return {
+            labels: labels,
+            datasets: [
+                {
+                    data: data,
+                    backgroundColor: backgroundColors,
+                },
+            ],
+        };
+    }, [expenses]);
+
+
+    const pieChartData = generatePieChartData();
     const isOverBudget = getTotalExpenses() > convertedTotalBudget;
 
     useEffect(() => {
             const percentageSpent = (getTotalExpenses() / convertedTotalBudget) * 100;
-            if (percentageSpent > 90 && !isOverBudget) {
+            if (percentageSpent > 100) {
+                setShowOverBudgetModal(true);
+                setShowExceedAlert(false);
+                setShow80PercentAlert(false);
+            } else if (percentageSpent > 90) {
+                setShowOverBudgetModal(false);
                 setShowExceedAlert(true);
-                setTimeout(() => setShowExceedAlert(false), 5000);
+                setShow80PercentAlert(false);
+            } else if (percentageSpent > 80) {
+                setShowOverBudgetModal(false);
+                setShowExceedAlert(false);
+                setShow80PercentAlert(true);
+            } else {
+                setShowOverBudgetModal(false);
+                setShowExceedAlert(false);
+                setShow80PercentAlert(false);
             }
+
 
         }, [expenses, convertedTotalBudget, getTotalExpenses, isOverBudget]);
 
@@ -176,7 +215,7 @@ const BudgetTracker = () => {
 
         fetchCurrencies();
         fetchExchangeRate(currency);
-    }, [currency, fetchExchangeRate]);
+    }, [currency, fetchExchangeRate, exchangeRate_API_KEY]);
 
     return (
         <div className="min-h-screen bg-gray-100 py-8">
@@ -185,6 +224,12 @@ const BudgetTracker = () => {
                     <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 mb-4" role="alert">
                         <p className="font-bold">Warning</p>
                         <p>You are about to spend 90% of your budget!</p>
+                    </div>
+                )}
+                {show80PercentAlert && (
+                    <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-3 mb-4" role="alert">
+                        <p className="font-bold">Heads Up</p>
+                        <p>You have spent 80% of your budget!</p>
                     </div>
                 )}
                 {showOverBudgetModal && (
@@ -337,7 +382,7 @@ const BudgetTracker = () => {
                         <div className="text-sm text-gray-700 mb-1">Budget Usage</div>
                         <div className="h-2 w-full bg-gray-200 rounded-full">
                             <div
-                                className={`h-full rounded-full ${isOverBudget ? 'bg-red-500' : 'bg-green-500'}`}
+                                className={`h-full rounded-full ${isOverBudget ? 'bg-red-500' : (getTotalExpenses() / convertedTotalBudget) * 100 > 80 ? 'bg-orange-500' : 'bg-green-500'}`}
 
                                 style={{ width: `${Math.min(((getTotalExpenses() / convertedTotalBudget) * 100) || 0, 100)}%` }}
                             ></div>
@@ -351,7 +396,7 @@ const BudgetTracker = () => {
                         <Bar data={chartData} options={{ responsive: true }} />
                     </div>
                     <div>
-                        <h4 className="text-xl font-medium text-indigo-600 text-center mb-4">Budget Proportions (Pie Chart)</h4>
+                        <h4 className="text-xl font-medium text-indigo-600 text-center mb-4">Budget Proportions (Detailed Pie Chart)</h4>
                         <Pie data={pieChartData} options={{ responsive: true }} />
                     </div>
                 </div>
