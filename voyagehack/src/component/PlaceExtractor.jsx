@@ -11,7 +11,7 @@ const PlaceExtractor = ({ aiResponseText, onPlacesExtracted }) => {
   }, [aiResponseText]);
 
 
-  const apiKey='';
+  const apiKey= process.env.REACT_APP_GEMINI_API_KEY_Extrc;
 
   const extractPlaces = async (responseText) => {
     setLoading(true);

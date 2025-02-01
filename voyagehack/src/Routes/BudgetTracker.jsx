@@ -24,11 +24,13 @@ const BudgetTracker = () => {
     const [showOverBudgetModal, setShowOverBudgetModal] = useState(false);
     const [overBudgetAmount, setOverBudgetAmount] = useState(0);
 
+    
+    const exchangeRate_API_KEY=process.env.REACT_APP_EXCHANGE_RATE_API_KEY;
 
     // Fetch exchange rate for selected currency
     const fetchExchangeRate = useCallback(async (currencyCode) => {
         try {
-            const response = await axios.get(`https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/USD`);
+            const response = await axios.get(`https://v6.exchangerate-api.com/v6/${exchangeRate_API_KEY}/latest/USD`);
             const rate = response.data.conversion_rates[currencyCode];
             setExchangeRate(rate);
             setConvertedTotalBudget(totalBudget ? totalBudget * rate : 0);
@@ -165,7 +167,7 @@ const BudgetTracker = () => {
     useEffect(() => {
         const fetchCurrencies = async () => {
             try {
-                const response = await axios.get('https://v6.exchangerate-api.com/v6/YOUR_API_KEY/codes');
+                const response = await axios.get(`https://v6.exchangerate-api.com/v6/${exchangeRate_API_KEY}/codes`);
                 setCurrencyOptions(response.data.supported_codes);
             } catch (error) {
                 console.error('Error fetching currencies:', error);
