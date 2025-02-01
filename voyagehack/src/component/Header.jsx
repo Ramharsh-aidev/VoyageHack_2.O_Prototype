@@ -27,7 +27,7 @@ const products = [
   { 
     name: 'Local Insights', 
     description: 'Get insider tips on local attractions, dining, and culture at your travel destination.', 
-    href: '#',  
+    href: 'local-insights',  
     icon: MapPinIcon 
   },
 ];

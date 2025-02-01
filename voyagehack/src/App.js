@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Routes/Home';
 import AiTripPlanner from './Routes/AITripPlanner';
 import BudgetTrackerPage from './Routes/BudgetTracker';
+import LocalInsightsFeaturesPage from './Routes/LocalInsights';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/ai-trip-planner" element={<AiTripPlanner />} />
           {/* <Route path="/booking-integration" element={<BookingIntegrationPage />} /> */}
           <Route path="/budget-tracker" element={<BudgetTrackerPage />} />
-          {/* <Route path="/local-insights-features" element={<LocalInsightsFeaturesPage />} /> */}
+          <Route path="/local-insights" element={<LocalInsightsFeaturesPage />} />
           {/* <Route path="/marketplace" element={<MarketplacePage />} /> */}
           {/* <Route path="/company" element={<CompanyPage />} /> */}
           {/* <Route path="/login" element={<LoginPage />} /> */}
