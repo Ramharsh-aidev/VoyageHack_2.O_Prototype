@@ -15,7 +15,7 @@ const products = [
   { 
     name: 'Booking Integration', 
     description: 'Book hotels, flights, and activities directly through the platform.', 
-    href: '#',  
+    href: 'booking-integration',  
     icon: ArrowPathIcon 
   },
   { 

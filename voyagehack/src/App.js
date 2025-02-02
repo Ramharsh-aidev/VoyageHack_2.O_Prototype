@@ -4,6 +4,7 @@ import Home from './Routes/Home';
 import AiTripPlanner from './Routes/AITripPlanner';
 import BudgetTrackerPage from './Routes/BudgetTracker';
 import LocalInsights from './Routes/LocalInsights';
+import Booking from './Routes/Booking';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           {/* <Route path="/terms-conditions" element={<TermsConditionsPage />} /> */}
           {/* <Route path="/about" element={<AboutPage />} /> */}
           <Route path="/ai-trip-planner" element={<AiTripPlanner />} />
-          {/* <Route path="/booking-integration" element={<BookingIntegrationPage />} /> */}
+          <Route path="/booking-integration" element={<Booking />} />
           <Route path="/budget-tracker" element={<BudgetTrackerPage />} />
           <Route path="/local-insights" element={<LocalInsights />} />
           {/* <Route path="/marketplace" element={<MarketplacePage />} /> */}
