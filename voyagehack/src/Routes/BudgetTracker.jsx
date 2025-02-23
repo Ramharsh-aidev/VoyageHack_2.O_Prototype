@@ -3,6 +3,74 @@ import axios from 'axios';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS } from 'chart.js/auto';
 
+const LoginSignupPopup = ({ onSignIn, onSignUp, onSignInLater }) => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsVisible(true);
+        }, 500); // Delay of 500ms (0.5 seconds) before popup appears - adjust as needed
+
+        return () => clearTimeout(timer); // Clear timeout if component unmounts
+    }, []);
+
+    return (
+        <div className={`fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50 transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+            <div className="relative bg-white p-8 rounded shadow-lg max-w-sm transform transition-transform duration-500 ease-out origin-top ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}">
+                <h2 className="text-2xl font-bold text-center text-indigo-700 mb-6">Welcome!</h2>
+                <p className="text-gray-700 text-center mb-4">Sign up or log in to save your budget details.</p>
+                <div className="flex justify-center space-x-4 mb-4">
+                    <button
+                        onClick={onSignUp}
+                        className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none"
+                    >
+                        Sign Up
+                    </button>
+                    <button
+                        onClick={onSignIn}
+                        className="px-6 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600 focus:outline-none"
+                    >
+                        Log In
+                    </button>
+                </div>
+                <button
+                    onClick={onSignInLater}
+                    className="block w-full text-center text-gray-500 hover:text-gray-600 focus:outline-none"
+                >
+                    Sign in later
+                </button>
+                {/* Removed the close button */}
+            </div>
+        </div>
+    );
+};
+
+const ConfirmationPopup = ({ onClose, onConfirmSignIn }) => {
+    return (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex justify-center items-center z-50">
+            <div className="relative bg-white p-8 rounded shadow-lg max-w-sm">
+                <h2 className="text-xl font-bold text-red-600 mb-4">Confirmation</h2>
+                <p className="text-gray-700 mb-4">Your entered details will not be saved if you continue without signing in.</p>
+                <div className="flex justify-center space-x-4">
+                    <button
+                        onClick={onConfirmSignIn}
+                        className="px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600 focus:outline-none"
+                    >
+                        Sign In
+                    </button>
+                    <button
+                        onClick={onClose}
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 focus:outline-none"
+                    >
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
 const BudgetTracker = () => {
     const [totalBudget, setTotalBudget] = useState('');
     const [expenses, setExpenses] = useState({
@@ -24,6 +92,8 @@ const BudgetTracker = () => {
     const [showOverBudgetModal, setShowOverBudgetModal] = useState(false);
     const [overBudgetAmount, setOverBudgetAmount] = useState(0);
     const [show80PercentAlert, setShow80PercentAlert] = useState(false);
+    const [showLoginSignupPopup, setShowLoginSignupPopup] = useState(false); // set to false initially so popup will appear with delay
+    const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
 
 
     const exchangeRate_API_KEY=process.env.REACT_APP_EXCHANGE_RATE_API_KEY;
@@ -217,9 +287,60 @@ const BudgetTracker = () => {
         fetchExchangeRate(currency);
     }, [currency, fetchExchangeRate, exchangeRate_API_KEY]);
 
+    const handleSignIn = () => {
+        // Handle sign in logic here
+        setShowLoginSignupPopup(false);
+        alert('Sign In Clicked (Logic to be implemented)');
+    };
+
+    const handleSignUp = () => {
+        // Handle sign up logic here
+        setShowLoginSignupPopup(false);
+        alert('Sign Up Clicked (Logic to be implemented)');
+    };
+
+    const handleSignInLater = () => {
+        setShowLoginSignupPopup(false);
+        setShowConfirmationPopup(true);
+    };
+
+    const handleCloseConfirmation = () => {
+        setShowConfirmationPopup(false);
+    };
+
+    const handleConfirmSignInFromConfirmation = () => {
+        setShowConfirmationPopup(false);
+        setShowLoginSignupPopup(true); // Re-show the login popup
+    };
+
+    const handleCloseLoginSignupPopup = () => {
+        setShowLoginSignupPopup(false);
+    };
+
+    useEffect(() => {
+        const delayPopup = setTimeout(() => {
+            setShowLoginSignupPopup(true);
+        }, 1500); // Delay of 1.5 seconds before popup shows up on page load
+
+        return () => clearTimeout(delayPopup);
+    }, []);
+
+
     return (
-        <div className="min-h-screen bg-gray-100 py-8">
-            <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-6 md:p-8">
+        <div className="min-h-screen bg-gray-100">
+            <header className="bg-indigo-700 shadow">
+                <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                    <div>
+                        <a href="/" className="text-white font-bold text-xl">Home</a>
+                    </div>
+                    <div className="space-x-4">
+                        <button onClick={() => setShowLoginSignupPopup(true)} className="text-white hover:text-indigo-200">Log In</button>
+                        <button onClick={() => setShowLoginSignupPopup(true)} className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Sign Up</button>
+                    </div>
+                </div>
+            </header>
+
+            <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-6 md:p-8 mt-8">
                 {showExceedAlert && (
                     <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 mb-4" role="alert">
                         <p className="font-bold">Warning</p>
@@ -249,6 +370,7 @@ const BudgetTracker = () => {
                         </div>
                     </div>
                 )}
+
                 <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">Trip Budget Tracker</h2>
 
 
@@ -401,6 +523,21 @@ const BudgetTracker = () => {
                     </div>
                 </div>
             </div>
+
+            {showLoginSignupPopup && (
+                <LoginSignupPopup
+                    onSignIn={handleSignIn}
+                    onSignUp={handleSignUp}
+                    onSignInLater={handleSignInLater}
+                />
+            )}
+
+            {showConfirmationPopup && (
+                <ConfirmationPopup
+                    onClose={handleCloseConfirmation}
+                    onConfirmSignIn={handleConfirmSignInFromConfirmation}
+                />
+            )}
         </div>
     );
 };
