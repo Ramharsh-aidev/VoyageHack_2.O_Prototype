@@ -56,7 +56,7 @@ const SightseeingSearchForm = ({ onSearchResults }) => {
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label htmlFor="destination" className="block text-gray-700 text-sm font-bold mb-2">
-                        Destination City Code:
+                        Destination City:
                     </label>
                     <input
                         type="text"
