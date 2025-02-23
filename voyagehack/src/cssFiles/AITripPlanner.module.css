@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column; /* Make sure it's column direction */
   height: 100vh;
-  background: linear-gradient(50deg, #e0f7fa, #80c9ea);
+  background: linear-gradient(-150deg, #ffffff, #bf9fff); /* Changed background gradient to purple shades */
   overflow: hidden; /* Prevent scrollbars on the main container */
 }
 
@@ -18,7 +18,7 @@
 
 .header h1 {
   font-size: 2.5rem;
-  color: #2585e6;
+  color: #7c3aed; /* Deeper purple for header text */
   font-weight: bold;
   text-transform: uppercase;
   cursor: pointer;
@@ -27,7 +27,7 @@
 }
 
 .header h1:hover {
-  color: #1d0339;
+  color: #4c1d95; /* Darker purple on hover */
 }
 
 .header a {
@@ -46,7 +46,7 @@
   flex-grow: 1; /* Allow chatContainer to grow vertically */
   overflow-y: auto;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #f8f0fb; /* Very light purple background for chat container */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   margin-right: 1rem; /* Space between chat and map */
@@ -62,14 +62,15 @@
 }
 
 .chatContainer::-webkit-scrollbar-thumb {
-  background-color: #2585e6;
+  background-color: #9370db; /* Purple scrollbar thumb */
   border-radius: 10px;
 }
 
 .welcomeMessage {
   text-align: center;
-  font-size: 1.6rem;
-  color: #2585e6;
+  font-family: 'Monotype Corsiva';
+  font-size: 2rem;
+  color: #7c3aed; /* Purple welcome message text */
   font-weight: 600;
 }
 
@@ -90,24 +91,28 @@
 }
 
 .question .messageContent {
-  background: linear-gradient(145deg, #2585e6, #1d0339);
+  background: linear-gradient(40deg, #9e7ee3, #6721d0); /* Purple gradient for question */
   color: white;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-size: 1vw;
   align-self: flex-end;
   border-top-left-radius: 0;
   transform: scale(1.02);
 }
 
 .answer .messageContent {
-  background: linear-gradient(145deg, #f1f1f1, #ffffff);
+  background: linear-gradient(145deg, #f1eafa, #ffffff); /* Light purple tint for answer */
   color: #333;
+  font-size: large;
   align-self: flex-start;
   border-top-right-radius: 0;
 }
 
 .thinkingMessage {
   text-align: center;
-  font-size: 1.4rem;
-  color: #2585e6;
+  font-family: Monotype Corsiva;
+  font-size: 2.1rem;
+  color: #7c3aed; /* Purple thinking message text */
   font-weight: 500;
   animation: fadeIn 0.8s ease-out, bounce 1s infinite;
   margin-top: 2rem;
@@ -137,7 +142,7 @@
   display: flex;
   gap: 1rem;
   padding: 1.5rem;
-  background-color: #ffffff;
+  background-color: #f8f0fb; /* Light purple input form background */
   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
   margin-top: auto; /* Push input form to the bottom */
 }
@@ -145,7 +150,7 @@
 .questionInput {
   flex-grow: 1;
   padding: 1rem;
-  border: 2px solid #a5c5e5;
+  border: 2px solid #c0aed9; /* Light purple border for input */
   border-radius: 12px;
   font-size: 1rem;
   outline: none;
@@ -154,12 +159,12 @@
 }
 
 .questionInput:focus {
-  border-color: #2585e6;
+  border-color: #7c3aed; /* Purple focus border for input */
 }
 
 .sendButton {
   padding: 0.6rem 1.6rem;
-  background-color: #2585e6;
+  background-color: #7c3aed; /* Purple send button */
   color: white;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: large;
@@ -170,16 +175,16 @@
 }
 
 .sendButton:hover {
-  background-color: #48b6da;
+  background-color: #a382e2; /* Lighter purple on hover */
   transform: scale(1.05);
 }
 
 .sendButton:active {
-  background-color: #217bb6;
+  background-color: #672ab7; /* Darker purple on active */
 }
 
 .disabled {
-  background-color: #80b8cb;
+  background-color: #b3a4c9; /* Grayish purple disabled button */
   cursor: not-allowed;
 }
 
@@ -209,7 +214,7 @@
 
 .mapToggleButton {
   padding: 0.6rem 1.6rem;
-  background-color: #4CAF50; /* Green button color - adjust if needed */
+  background-color: #7c3aed; /* Purple map toggle button */
   color: white;
   border: none;
   border-radius: 10px;
@@ -220,7 +225,7 @@
 }
 
 .mapToggleButton:hover {
-  background-color: #45a049;
+  background-color: #a382e2; /* Lighter purple on hover */
   transform: scale(1.05);
 }
 

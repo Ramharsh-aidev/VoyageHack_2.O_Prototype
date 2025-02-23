@@ -168,7 +168,7 @@ function AITripPlanner() {
       <div className={styles.header}>
         <button
           onClick={goToHomePage}
-          className="absolute top-2 left-2 z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="absolute top-2 left-2 z-10 bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded"
         >
           Home
         </button>
@@ -182,7 +182,7 @@ function AITripPlanner() {
           {chatHistory.length === 0 ? (
             <div className={styles.welcomeMessage}>
               <h2>Welcome to the AI Suggester! 🌍</h2>
-              <p>Let me help you plan your next destination based on your preferences.</p>
+              <p>Let me help you Plan your next Destination Based on your Preferences.</p>
             </div>
           ) : (
             chatHistory.map((chat, index) => (
