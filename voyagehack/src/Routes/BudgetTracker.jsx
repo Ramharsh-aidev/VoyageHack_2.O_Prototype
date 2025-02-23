@@ -328,8 +328,9 @@ const BudgetTracker = () => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <header className="bg-indigo-700 shadow">
-                <div className="mx-auto px-4 py-3 flex justify-between items-center">
+            {/* BudgetTracker Navbar - Full Width */}
+            <header className="bg-indigo-700 shadow mb-16"> {/* Increased mb for more space below navbar and removed max-w-6xl mx-auto */}
+                <div className="container px-4 py-3 flex justify-between items-center mx-auto"> {/* Added container and mx-auto to center content inside navbar */}
                     <div>
                         <a href="/" className="text-white font-bold text-xl">Home</a>
                     </div>

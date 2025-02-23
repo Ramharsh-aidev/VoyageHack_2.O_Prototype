@@ -58,19 +58,22 @@ const Booking = () => {
 
 
     return (
-        <div className="container mx-auto p-6 md:p-8"> {/* Increased container padding for better spacing */}
-            {/* BudgetTracker Navbar - Full Width */}
-            <header className="bg-indigo-700 shadow mb-10"> {/* Added mb-10 for more space below navbar */}
-                <div className="px-4 py-3 flex justify-between items-center"> {/* Removed max-w-6xl mx-auto */}
-                    <div>
-                        <a href="/" className="text-white font-bold text-xl">Home</a>
-                    </div>
-                    <div className="space-x-4">
-                        <button className="text-white hover:text-indigo-200">Log In</button>
-                        <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Sign Up</button>
-                    </div>
+        <div>
+        {/* BudgetTracker Navbar - Full Width */}
+        <header className="bg-indigo-700 shadow mb-16"> {/* Increased mb for more space below navbar and removed max-w-6xl mx-auto */}
+            <div className="container px-4 py-3 flex justify-between items-center mx-auto"> {/* Added container and mx-auto to center content inside navbar */}
+                <div>
+                    <a href="/" className="text-white font-bold text-xl">Home</a>
                 </div>
-            </header>
+                <div className="space-x-4">
+                    <button className="text-white hover:text-indigo-200">Log In</button>
+                    <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Sign Up</button>
+                </div>
+            </div>
+        </header>
+
+        <div className="container mx-auto p-6 md:p-8"> {/* Increased container padding for better spacing */}
+
 
             <h1 className="text-4xl font-bold text-center mb-12 text-gray-800 font-serif"> {/* Increased font size, bold, serif font, more margin */}
                 Explore and Book
@@ -79,7 +82,7 @@ const Booking = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10"> {/* Increased gap and margin below forms */}
                 {/* Sightseeing Search Form */}
-                <div className="md:col-span-1">
+                <div className="md:col-span-1 mb-12 md:mb-0"> {/* Added mb-12 for space below on smaller screens, removed on medium and above */}
                     <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border-2 border-gray-100 hover:border-indigo-300 flex flex-col h-full"> {/* Increased padding, rounded corners, shadow, border, flex and h-full for equal height */}
                         <h2 className="text-2xl font-semibold text-gray-700 mb-8 text-center font-sans text-indigo-700"> {/* Styled heading - font-sans, indigo color */}
                             Find Sightseeing
@@ -161,6 +164,7 @@ const Booking = () => {
             )}
 
 
+        </div>
         </div>
     );
 };
