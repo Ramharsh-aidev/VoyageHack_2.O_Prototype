@@ -10,7 +10,7 @@ const products = [
     name: 'AI-Powered Trip Planner',
     description: 'Plan trip with AI-driven suggestions, personalized itineraries & recommendations on your preferences',
     href: 'ai-trip-planner',
-    icon: ChartPieIcon
+    icon: CreditCardIcon
   },
   {
     name: 'Booking Integration',
@@ -22,7 +22,7 @@ const products = [
     name: 'Budget Tracker',
     description: 'Keep track of your travel expenses and ensure your trip stays within budget.',
     href: 'budget-tracker',
-    icon: CreditCardIcon
+    icon: ChartPieIcon
   },
   {
     name: 'Local Insights',
