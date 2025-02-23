@@ -3,9 +3,9 @@ import { Autocomplete } from '@react-google-maps/api';
 
 const Header = ({ onPlaceChanged, onLoad }) => {
   return (
-    <header className="bg-gray-800 text-white py-4">
+    <header className="bg-indigo-700 text-white py-4"> {/* Changed navbar color to blue-700 (a darker blue) */}
       <nav className="container mx-auto px-4 flex justify-between items-center">
-        <h5 className="text-xl font-bold">
+        <h5 className="text-xl font-semibold"> {/* Changed font-bold to font-semibold for less bold HOME */}
            <a href="/" className="-m-1.5 p-1.5">
               <span>HOME</span>
             </a>

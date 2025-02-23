@@ -329,7 +329,7 @@ const BudgetTracker = () => {
     return (
         <div className="min-h-screen bg-gray-100">
             <header className="bg-indigo-700 shadow">
-                <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div className="mx-auto px-4 py-3 flex justify-between items-center">
                     <div>
                         <a href="/" className="text-white font-bold text-xl">Home</a>
                     </div>
@@ -340,7 +340,7 @@ const BudgetTracker = () => {
                 </div>
             </header>
 
-            <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-xl p-6 md:p-8 mt-8">
+            <div className="mx-auto bg-white rounded-lg shadow-xl p-6 md:p-8 mt-8" style={{maxWidth: '1200px'}}> {/* Increased max-width and made it inline style for easy adjustment */}
                 {showExceedAlert && (
                     <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 mb-4" role="alert">
                         <p className="font-bold">Warning</p>
