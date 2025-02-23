@@ -5,8 +5,9 @@ import styles from "../cssFiles/AITripPlanner.module.css";
 import preferencesData from "../Assests/preferencesData.json";
 import MapComponent from "../component/MapComponent";
 import PlaceExtractor from "../component/PlaceExtractor";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const apiKey = process.env.REACT_APP_GEMINI_API_KEY_AI; 
+const apiKey = process.env.REACT_APP_GEMINI_API_KEY_AI;
 
 function AITripPlanner() {
   const [chatHistory, setChatHistory] = useState([]);
@@ -16,6 +17,8 @@ function AITripPlanner() {
   const [places, setPlaces] = useState([]);
   const chatContainerRef = useRef(null);
   const [isMapVisible, setIsMapVisible] = useState(false); // State for map visibility
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [isLoadingHome, setIsLoadingHome] = useState(false); // State for home button loading
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -139,9 +142,36 @@ function AITripPlanner() {
     setIsMapVisible(!isMapVisible);
   };
 
+  const goToHomePage = () => {
+    setIsLoadingHome(true); // Set loading to true when button is clicked
+    setTimeout(() => {
+      navigate('/'); // Use navigate to go to the home page (assuming '/' is your home route)
+      setIsLoadingHome(false); // Set loading back to false after navigation and delay
+    }, 1000); // Delay of 1000 milliseconds (1 seconds)
+  };
+
+
+  if (isLoadingHome) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="relative">
+          <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+          <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.aiTripPlannerContainer}>
       <div className={styles.header}>
+        <button
+          onClick={goToHomePage}
+          className="absolute top-2 left-2 z-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Home
+        </button>
         <a href="/ai-Destination-suggester" target="_blank" rel="noopener noreferrer">
           <h1>AI Destination Suggester</h1>
         </a>
@@ -220,5 +250,3 @@ function AITripPlanner() {
 }
 
 export default AITripPlanner;
-
-
