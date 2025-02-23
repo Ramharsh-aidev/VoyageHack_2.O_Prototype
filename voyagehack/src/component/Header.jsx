@@ -6,29 +6,29 @@ import { CreditCardIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import Logo from '../images/Website_Logo.jpeg';
 
 const products = [
-  { 
-    name: 'AI-Powered Trip Planner', 
-    description: 'Plan trip with AI-driven suggestions, personalized itineraries & recommendations on your preferences', 
-    href: 'ai-trip-planner', 
-    icon: ChartPieIcon 
+  {
+    name: 'AI-Powered Trip Planner',
+    description: 'Plan trip with AI-driven suggestions, personalized itineraries & recommendations on your preferences',
+    href: 'ai-trip-planner',
+    icon: ChartPieIcon
   },
-  { 
-    name: 'Booking Integration', 
-    description: 'Book hotels, flights, and activities directly through the platform.', 
-    href: 'booking-integration',  
-    icon: ArrowPathIcon 
+  {
+    name: 'Booking Integration',
+    description: 'Book hotels, flights, and activities directly through the platform.',
+    href: 'booking-integration',
+    icon: ArrowPathIcon
   },
-  { 
-    name: 'Budget Tracker', 
-    description: 'Keep track of your travel expenses and ensure your trip stays within budget.', 
-    href: 'budget-tracker', 
-    icon: CreditCardIcon 
+  {
+    name: 'Budget Tracker',
+    description: 'Keep track of your travel expenses and ensure your trip stays within budget.',
+    href: 'budget-tracker',
+    icon: CreditCardIcon
   },
-  { 
-    name: 'Local Insights', 
-    description: 'Get insider tips on local attractions, dining, and culture at your travel destination.', 
-    href: 'local-insights',  
-    icon: MapPinIcon 
+  {
+    name: 'Local Insights',
+    description: 'Get insider tips on local attractions, dining, and culture at your travel destination.',
+    href: 'local-insights',
+    icon: MapPinIcon
   },
 ];
 
@@ -37,11 +37,24 @@ const callsToAction = [
   { name: 'Contact sales', href: '#', icon: PhoneIcon },
 ];
 
+const Loader = () => (
+  <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-opacity-50 bg-gray-500 z-50">
+    <div className="relative">
+      <div className="h-24 w-24 rounded-full border-t-8 border-b-8 border-gray-200"></div>
+      <div className="absolute top-0 left-0 h-24 w-24 rounded-full border-t-8 border-b-8 border-blue-500 animate-spin">
+      </div>
+    </div>
+  </div>
+);
+
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <header className="bg-lightBlue shadow-lg rounded-b-lg">
+      {isLoading && <Loader />} {/* Render loader when isLoading is true */}
       {/* Wrap the navbar in a div with max-width and centered alignment */}
       <div className="mx-auto">
         <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8 rounded-b-lg shadow-lg">
@@ -86,7 +99,13 @@ export default function Header() {
                         <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
                       </div>
                       <div className="flex-auto">
-                        <button onClick={() => window.location.href = item.href} className="block font-semibold text-gray-900">
+                        <button onClick={() => {
+                          setIsLoading(true);
+                          setTimeout(() => {
+                            setIsLoading(false);
+                            window.location.href = item.href;
+                          }, 500); // Simulate loading for 0.5 seconds
+                        }} className="block font-semibold text-gray-900">
                           {item.name}
                         </button>
                         <p className="mt-1 text-gray-600">{item.description}</p>
@@ -124,13 +143,13 @@ export default function Header() {
               onClick={() => window.location.href = '#'}
               className="px-6 py-2 text-lg font-semibold text-indigo-600 bg-white border-2 border-indigo-600 rounded-lg shadow-lg hover:bg-indigo-100 hover:shadow-xl transition-all duration-300"
             >
-              Log in <span aria-hidden="true">&rarr;</span>
+              Log in <span aria-hidden="true">→</span>
             </button>
             <button
               onClick={() => window.location.href = '#'}
               className="px-6 py-2 text-lg font-semibold text-white bg-indigo-600 rounded-lg shadow-lg hover:bg-indigo-700 transition-all duration-300"
             >
-              Sign Up <span aria-hidden="true">&rarr;</span>
+              Sign Up <span aria-hidden="true">→</span>
             </button>
           </div>
         </nav>
@@ -170,7 +189,13 @@ export default function Header() {
                       <DisclosureButton
                         key={item.name}
                         as="button"
-                        onClick={() => window.location.href = item.href}
+                        onClick={() => {
+                          setIsLoading(true);
+                          setTimeout(() => {
+                            setIsLoading(false);
+                            window.location.href = item.href;
+                          }, 500); // Simulate loading for 0.5 seconds
+                        }}
                         className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold text-gray-900 hover:bg-gray-50"
                       >
                         {item.name}
